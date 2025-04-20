@@ -16,10 +16,16 @@ async function fetchAndSaveNews() {
       `https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apiKey=${NEWS_API_KEY}`
     );
 
-    // 2. Save to Firestore
+    // 2. Determine the collection name based on today's date (YYYYMMDD format)
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+    const day = String(today.getDate()).padStart(2, '0');
+    const collectionName = `${year}${month}${day}`;
+
     const batch = admin.firestore().batch();
     data.articles.forEach(article => {
-      const ref = admin.firestore().collection('news').doc();
+      const ref = admin.firestore().collection(collectionName).doc(); // Use the dynamic collection name
       batch.set(ref, {
         title: article.title,
         url: article.url,
@@ -30,7 +36,7 @@ async function fetchAndSaveNews() {
     });
 
     await batch.commit();
-    console.log('News saved successfully!');
+    console.log(`News saved successfully to collection: ${collectionName}!`);
   } catch (error) {
     console.error('Error:', error);
   }
