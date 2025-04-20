@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
   try {
     const newsApiKey = process.env.NEWS_API_KEY;
     const response = await axios.get(
-      `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${newsApiKey}`
+      'https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${newsApiKey}'
     );
     
     // Process and summarize articles
@@ -47,7 +47,7 @@ router.get('/:id', async (req, res) => {
     // For this example, we'll fetch all and filter
     const newsApiKey = process.env.NEWS_API_KEY;
     const response = await axios.get(
-      `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${newsApiKey}`
+      'https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${newsApiKey}'
     );
     
     const article = response.data.articles.find(
