@@ -13,8 +13,8 @@ async function fetchAndSaveNews() {
   try {
     // 1. Fetch news
     const { data } = await axios.get(
-      `https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apiKey=${NEWS_API_KEY}`
-    );
+            `https://newsapi.org/v2/top-headlines?category=business&apiKey=${NEWS_API_KEY}` // Added category=business
+        );
 
     // 2. Determine the collection name based on today's date (YYYYMMDD format)
     const today = new Date();
@@ -36,7 +36,7 @@ async function fetchAndSaveNews() {
     });
 
     await batch.commit();
-    console.log(`News saved successfully to collection: ${collectionName}!`);
+    console.log(`Business news saved successfully to collection: ${collectionName}!`);
   } catch (error) {
     console.error('Error:', error);
   }
